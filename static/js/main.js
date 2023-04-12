@@ -21,7 +21,7 @@ function get_rs(sig) {
 
 function split_sig_pieces(script) {
     const sigLen = parseInt(script.slice(2, 4), 16);
-    const sig = script.slice(4, 4 + sigLen * 2);
+    const sig = script.slice(4, 2 + sigLen * 2);
     const { r, s } = get_rs(sig.slice(4));
     const pubLen = parseInt(script.slice(4 + sigLen * 2, 4 + sigLen * 2 + 2), 16);
     const pub = script.slice(4 + sigLen * 2 + 2);
