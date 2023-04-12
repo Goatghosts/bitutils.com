@@ -91,7 +91,7 @@ function getSignableTxn(parsed) {
 
 function fetchData() {
     const input = document.getElementById("inputValue");
-    const resultTable = document.getElementById("resultTable");
+    const resultContainer = document.getElementById("resultContainer");
 
     const url = `https://blockchain.info/rawtx/${input.value}?format=hex`;
 
@@ -101,22 +101,26 @@ function fetchData() {
             const parsed = parseTx(data);
             const signableTxn = getSignableTxn(parsed);
 
-            // Очистите таблицу перед добавлением новых данных
-            resultTable.innerHTML = '';
+            // Очистите контейнер перед добавлением новых данных
+            resultContainer.innerHTML = '';
 
-            // Добавьте данные в таблицу
+            // Добавьте данные в контейнер
             signableTxn.forEach((item, index) => {
-                const newRow = resultTable.insertRow();
-                // console.log(index, item.message)
+                const resultItem = document.createElement("div");
+                resultItem.classList.add("result-item");
 
-                newRow.insertCell().textContent = index;
-                newRow.insertCell().textContent = item.r;
-                newRow.insertCell().textContent = item.s;
-                newRow.insertCell().textContent = item.z;
-                newRow.insertCell().textContent = item.pub;
+                resultItem.innerHTML = `
+                    <h3>Input #${index}</h3>
+                    <span><strong>R:</strong> ${item.r}</span>
+                    <span><strong>S:</strong> ${item.s}</span>
+                    <span><strong>Z:</strong> ${item.z}</span>
+                    <span><strong>Public Key:</strong> ${item.pub}</span>
+                `;
+
+                resultContainer.appendChild(resultItem);
             });
         })
         .catch(error => {
-            resultTable.innerHTML = `<tr><td colspan="5">Произошла ошибка: ${error}</td></tr>`;
+            resultContainer.innerHTML = `<div class="result-item"><p>Произошла ошибка: ${error}</p></div>`;
         });
 }

@@ -15,19 +15,8 @@
         <h1>Signable Txn Calculator</h1>
         <input type="text" id="inputValue" placeholder="Enter raw transaction hash" />
         <button onclick="fetchData()">Get Signable Txn Data</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Index</th>
-                    <th>R</th>
-                    <th>S</th>
-                    <th>Z</th>
-                    <th>Public Key</th>
-                </tr>
-            </thead>
-            <tbody id="resultTable">
-            </tbody>
-        </table>
+        <div id="resultContainer" class="result-container">
+        </div>
     </div>
 </body>
 
