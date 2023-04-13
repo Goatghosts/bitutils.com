@@ -18,11 +18,11 @@ function createMenu() {
     menuItem1.onclick = function () { navigateToPage('txn_signatures.html'); };
     menu.appendChild(menuItem1);
 
-    // const telegramButton = document.createElement("button");
-    // telegramButton.setAttribute("type", "telegram");
-    // telegramButton.textContent = "Telegram";
-    // telegramButton.onclick = function () { window.open('https://github.com/Goatghosts/bitutils.com', '_blank'); };
-    // menu.appendChild(telegramButton);
+    const telegramButton = document.createElement("button");
+    telegramButton.setAttribute("type", "telegram");
+    telegramButton.textContent = "Telegram";
+    telegramButton.onclick = function () { window.open('https://t.me/bitutils', '_blank'); };
+    menu.appendChild(telegramButton);
 
     const githubButton = document.createElement("button");
     githubButton.setAttribute("type", "github");
