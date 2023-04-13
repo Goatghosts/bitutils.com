@@ -54,6 +54,12 @@ h2 {
     margin-bottom: 20px;
 }
 
+h3 {
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 16px;
+}
+
 input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -61,6 +67,17 @@ input[type="text"] {
     border: 1px solid #dddddd;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    resize: vertical;
+    overflow: auto;
 }
 
 button {

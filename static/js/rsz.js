@@ -74,11 +74,10 @@ function getSignableTxn(parsed) {
     return res;
 }
 
-function fetchData() {
-    const input = document.getElementById("inputValue");
+function from_txid(txid) {
     const resultContainer = document.getElementById("resultContainer");
 
-    const url = `https://blockchain.info/rawtx/${input.value}?format=hex`;
+    const url = `https://blockchain.info/rawtx/${txid}?format=hex`;
 
     fetch(url)
         .then(response => response.text())
@@ -108,4 +107,47 @@ function fetchData() {
         .catch(error => {
             resultContainer.innerHTML = `<div class="result-item"><p>Произошла ошибка: ${error}</p></div>`;
         });
+}
+
+function from_raw_tx(rawData) {
+    const resultContainer = document.getElementById("resultContainer");
+
+    try {
+        const parsed = parseTx(rawData);
+        const signableTxn = getSignableTxn(parsed);
+
+        // Очистите контейнер перед добавлением новых данных
+        resultContainer.innerHTML = '';
+
+        // Добавьте данные в контейнер
+        signableTxn.forEach((item, index) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("result-item");
+
+            resultItem.innerHTML = `
+                <h3>Input #${index}</h3>
+                <span><strong>R:</strong> ${item.r}</span>
+                <span><strong>S:</strong> ${item.s}</span>
+                <span><strong>Z:</strong> ${item.z}</span>
+                <span><strong>Public Key:</strong> ${item.pub}</span>
+            `;
+
+            resultContainer.appendChild(resultItem);
+        });
+    } catch (error) {
+        resultContainer.innerHTML = `<div class="result-item"><p>Произошла ошибка: ${error}</p></div>`;
+    }
+}
+
+function processTransactionData() {
+    const inputValue = document.getElementById("inputValue").value;
+
+    // Регулярное выражение для проверки формата TXID (64-значный шестнадцатеричный номер)
+    const txidPattern = /^[a-fA-F0-9]{64}$/;
+
+    if (txidPattern.test(inputValue)) {
+        from_txid(inputValue);
+    } else {
+        from_raw_tx(inputValue);
+    }
 }
