@@ -1,17 +1,3 @@
-
-
-function sha256(hexData) {
-    const byteArray = CryptoJS.enc.Hex.parse(hexData);
-    const hash = CryptoJS.SHA256(byteArray);
-    return hash.toString(CryptoJS.enc.Hex);
-}
-
-function hash160(pubk_hex) {
-    const sha256hash = sha256(pubk_hex);
-    const ripemd160hash = CryptoJS.RIPEMD160(CryptoJS.enc.Hex.parse(sha256hash));
-    return ripemd160hash.toString(CryptoJS.enc.Hex);
-}
-
 function get_rs(sig) {
     const rlen = parseInt(sig.slice(2, 4), 16);
     const r = sig.slice(4, 4 + rlen * 2);
@@ -36,7 +22,6 @@ function parseTx(txn) {
     }
 
     const inp_list = [];
-    const ver = txn.slice(0, 8);
     if (txn.slice(8, 12) === '0001') {
         alert('UnSupported Tx Input. Presence of Witness Data');
         throw new Error('Unsupported Tx Input');

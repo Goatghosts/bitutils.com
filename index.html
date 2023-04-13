@@ -4,20 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signable Txn Calculator</title>
+    <title>Get Bitcoin Transaction Signatures</title>
     <script src="static/js/crypto-js.min.js"></script>
-    <script src="static/js/main.js" defer></script>
+    <script src="static/js/utils.js" defer></script>
+    <script src="static/js/rsz.js" defer></script>
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Signable Txn Calculator</h1>
-        <input type="text" id="inputValue" placeholder="Enter raw transaction hash" />
-        <button onclick="fetchData()">Get Signable Txn Data</button>
+    <header>
+        <h1>Get Bitcoin Transaction Signatures from TXID</h1>
+    </header>
+    <main class="container">
+        <input type="text" id="inputValue" placeholder="Enter Transaction ID" />
+        <button onclick="fetchData()">Get RSZ</button>
         <div id="resultContainer" class="result-container">
         </div>
-    </div>
+    </main>
+    <footer>
+        <p>Содержимое этого ресурса не принадлежит никому. Оно существует само по себе и непонятно зачем.</p>
+    </footer>
 </body>
 
 </html>
