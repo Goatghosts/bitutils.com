@@ -4,26 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Bitcoin Transaction Signatures</title>
-    <script src="static/js/crypto-js.min.js"></script>
-    <script src="static/js/utils.js" defer></script>
-    <script src="static/js/rsz.js" defer></script>
+    <title>BitUtils.com - Utilities for ECDSA and cryptocurrencies</title>
+    <script src="static/js/header.js" defer></script>
+    <script src="static/js/footer.js" defer></script>
+    <script src="static/js/menu.js" defer></script>
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
-    <header>
-        <h1>Get Bitcoin Transaction Signatures from TXID</h1>
-    </header>
-    <main class="container">
-        <input type="text" id="inputValue" placeholder="Enter Transaction ID" />
-        <button onclick="fetchData()">Get RSZ</button>
-        <div id="resultContainer" class="result-container">
+    <main>
+        <div class="block-left"></div>
+        <div class="block-right">
+            <section class="form">
+                <h2>Welcome to BitUtils.com!</h2>
+                <p>
+                    BitUtils.com is a collection of utilities for working with ECDSA signatures and
+                    cryptocurrencies.<br>
+                    Our goal is to provide a simple and user-friendly interface for developers and enthusiasts to
+                    explore and use these powerful tools.
+                </p>
+                <h3>Tools:</h3>
+                <ul>
+                    <li><a href="txn_signatures.html">Get Bitcoin Transaction Signatures from TXID</a></li>
+                    <!-- Add more tools here -->
+                </ul>
+            </section>
         </div>
     </main>
-    <footer>
-        <p>Содержимое этого ресурса не принадлежит никому. Оно существует само по себе и непонятно зачем.</p>
-    </footer>
 </body>
 
 </html>
