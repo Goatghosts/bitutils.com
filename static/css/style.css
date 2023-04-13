@@ -19,6 +19,8 @@ main {
     max-width: 80%;
     margin: 20px auto;
     display: flex;
+    flex-wrap: wrap;
+    word-wrap: break-word;
 }
 
 body {
@@ -148,14 +150,24 @@ footer {
     border-top: 1px solid #ddd;
 }
 
-.block-left {
-    width: 20%;
-    overflow: auto;
-    float: left;
+.menu {
+    width: 100%;
+    order: 1;
 }
 
-.block-right {
-    width: 80%;
-    overflow: auto;
-    float: right;
+.content {
+    width: 100%;
+    order: 2;
+}
+
+@media (min-width: 1024px) {
+    .menu {
+        width: 20%;
+        order: 1;
+    }
+
+    .content {
+        width: 80%;
+        order: 2;
+    }
 }

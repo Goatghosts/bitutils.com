@@ -34,6 +34,6 @@ function createMenu() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const menuContainer = document.querySelector(".block-left");
+    const menuContainer = document.querySelector(".menu");
     menuContainer.appendChild(createMenu());
 });
