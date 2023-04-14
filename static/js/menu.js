@@ -18,6 +18,12 @@ function createMenu() {
     menuItem1.onclick = function () { navigateToPage('txn_signatures.html'); };
     menu.appendChild(menuItem1);
 
+    // const menuItem2 = document.createElement("button");
+    // menuItem2.setAttribute("type", "menu");
+    // menuItem2.textContent = "Wallet Details";
+    // menuItem2.onclick = function () { navigateToPage('wallet_details.html'); };
+    // menu.appendChild(menuItem2);
+
     const telegramButton = document.createElement("button");
     telegramButton.setAttribute("type", "telegram");
     telegramButton.textContent = "Telegram";

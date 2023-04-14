@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitUtils.com - Utilities for ECDSA and cryptocurrencies</title>
+    <script src="static/js/header.js" defer></script>
+    <script src="static/js/footer.js" defer></script>
+    <script src="static/js/menu.js" defer></script>
+    <script src="static/js/crypto-js.min.js" defer></script>
+    <script src="static/js/utils.js" defer></script>
+    <script src="static/js/wallet_details.js" defer></script>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <main>
+        <div class="menu"></div>
+        <div class="content">
+            <section class="form">
+                <h2>Test bitcoin private key formats</h2>
+                <input type="text" id="inputValue" placeholder="Enter private key" />
+                <button onclick="convertPrivateKeyToScalar()">Test</button>
+                <div id="resultContainer" class="result-container">
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
