@@ -42,6 +42,54 @@ function decodeBase58(string) {
     return bytes.reverse().map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
+function mod(a, b) {
+    return ((a % b) + b) % b;
+}
+
+// Function from
+// https://github.com/juanelas/bigint-mod-arith/blob/master/src/ts/egcd.ts
+// God grant you health, Juan Hernández Serrano
+function eGcd(a, b) {
+    if (typeof a === 'number') a = BigInt(a)
+    if (typeof b === 'number') b = BigInt(b)
+
+    if (a <= 0n || b <= 0n) throw new RangeError('a and b MUST be > 0') // a and b MUST be positive
+
+    let x = 0n
+    let y = 1n
+    let u = 1n
+    let v = 0n
+
+    while (a !== 0n) {
+        const q = b / a
+        const r = b % a
+        const m = x - (u * q)
+        const n = y - (v * q)
+        b = a
+        a = r
+        x = u
+        y = v
+        u = m
+        v = n
+    }
+    return {
+        g: b,
+        x,
+        y
+    }
+}
+
+// Function from
+// https://github.com/juanelas/bigint-mod-arith/blob/master/src/ts/modInv.ts
+// God grant you health, Juan Hernández Serrano
+function modInv(a, n) {
+    const egcd = eGcd(mod(a, n), n)
+    if (egcd.g !== 1n) {
+        throw new RangeError(`${a.toString()} does not have inverse modulo ${n.toString()}`) // modular inverse does not exist
+    } else {
+        return mod(egcd.x, n)
+    }
+}
 
 function sha256(hexData) {
     const byteArray = CryptoJS.enc.Hex.parse(hexData);

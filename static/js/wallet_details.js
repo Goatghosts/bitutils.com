@@ -75,5 +75,9 @@ function convertPrivateKeyToScalar() {
     } else {
         throw new Error("Invalid private key format");
     }
-    console.log(scalar)
+    const publicKey = doubleAndAdd(scalar);
+    const uncompressedKey = "04" + publicKey[0].toString(16).padStart(64, '0').toUpperCase() + publicKey[1].toString(16).padStart(64, '0').toUpperCase();
+    console.log("Private key (DEC):", scalar.toString());
+    console.log("Private key (HEX):", intToHex(scalar));
+    console.log("Uncompressed public key:", uncompressedKey);
 }
