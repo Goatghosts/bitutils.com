@@ -20,9 +20,18 @@
         <div class="menu"></div>
         <div class="content">
             <section class="form">
-                <h2>Test bitcoin private key formats</h2>
-                <input type="text" id="inputValue" placeholder="Enter private key" />
-                <button onclick="getWalletDetails()">Test</button>
+                <h2>Convert Private Key To Address</h2>
+                <p>
+                    On this page, you'll find tools for working with cryptocurrency private keys.<br>
+                    Enter a private key, and the system will automatically convert it to the corresponding
+                    public key and generate addresses and WIFs for various cryptocurrencies such as Bitcoin, Litecoin,
+                    Dogecoin and Dash.<br>
+                    The results are provided in various formats, including decimal and hexadecimal values, for your
+                    convenience and analysis.
+                </p>
+                <input type="text" id="inputValue"
+                    placeholder="Enter the private key in any of the available formats (DEC, HEX, WIF, CWIF, MINI)" />
+                <button onclick="getWalletDetails()">Get Details</button>
                 <div id="resultContainer" class="result-container">
                 </div>
             </section>
