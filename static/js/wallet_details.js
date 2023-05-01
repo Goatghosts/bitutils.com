@@ -57,7 +57,13 @@ function decimalToScalar(decimalPrivateKey) {
 function convertPrivateKeyToScalar() {
     const privateKey = document.getElementById("inputValue").value;
     let scalar;
-    if (isWIF(privateKey)) {
+    if (isDecimal(privateKey)) {
+        console.log("IS DEC")
+        scalar = decimalToScalar(privateKey);
+    } else if (isHex(privateKey)) {
+        console.log("IS HEX")
+        scalar = hexToScalar(privateKey);
+    } else if (isWIF(privateKey)) {
         console.log("IS WIF")
         scalar = wifToScalar(privateKey);
     } else if (isCompressedWIF(privateKey)) {
@@ -66,12 +72,6 @@ function convertPrivateKeyToScalar() {
     } else if (isMini(privateKey)) {
         console.log("IS MINI")
         scalar = miniToScalar(privateKey);
-    } else if (isDecimal(privateKey)) {
-        console.log("IS DEC")
-        scalar = decimalToScalar(privateKey);
-    } else if (isHex(privateKey)) {
-        console.log("IS HEX")
-        scalar = hexToScalar(privateKey);
     } else {
         throw new Error("Invalid private key format");
     }
