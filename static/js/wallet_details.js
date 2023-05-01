@@ -172,21 +172,21 @@ function getWalletDetails() {
         const mainResultItem = document.createElement("div");
         mainResultItem.classList.add("result-item");
         mainResultItem.innerHTML = `
-        <h3>Information</h2>
-        <span><strong>Private key (DEC):</strong> ${scalar.toString()}</span>
-        <span><strong>Private key (HEX):</strong> ${intToHex(scalar)}</span>
-        <span><strong>Private key (BIN):</strong> ${intToBin(scalar)}</span>
-        <br>
-        <span><strong>Point X (DEC):</strong> ${publicKey[0]}</span>
-        <span><strong>Point Y (DEC):</strong> ${publicKey[1]}</span>
-        <span><strong>Point X (HEX):</strong> ${intToHex(publicKey[0])}</span>
-        <span><strong>Point Y (HEX):</strong> ${intToHex(publicKey[1])}</span>
-        <br>
-        <span><strong>Public key (U):</strong> ${uncompressedKey}</span>
-        <span><strong>Public key (C):</strong> ${compressedKey}</span>
-        <span><strong>Hash160 (U):</strong> ${uncompressedHash160}</span>
-        <span><strong>Hash160 (C):</strong> ${compressedHash160}</span>
-    `;
+            <h3>Information</h2>
+            <span><strong>Private key (DEC):</strong> ${scalar.toString()}</span>
+            <span><strong>Private key (HEX):</strong> ${intToHex(scalar)}</span>
+            <span><strong>Private key (BIN):</strong> ${intToBin(scalar)}</span>
+            <br>
+            <span><strong>Point X (DEC):</strong> ${publicKey[0]}</span>
+            <span><strong>Point Y (DEC):</strong> ${publicKey[1]}</span>
+            <span><strong>Point X (HEX):</strong> ${intToHex(publicKey[0])}</span>
+            <span><strong>Point Y (HEX):</strong> ${intToHex(publicKey[1])}</span>
+            <br>
+            <span><strong>Public key (U):</strong> ${uncompressedKey}</span>
+            <span><strong>Public key (C):</strong> ${compressedKey}</span>
+            <span><strong>Hash160 (U):</strong> ${uncompressedHash160}</span>
+            <span><strong>Hash160 (C):</strong> ${compressedHash160}</span>
+        `;
         resultContainer.appendChild(mainResultItem);
 
         supportedCryptocurrencies.forEach((crypto) => {
@@ -199,12 +199,12 @@ function getWalletDetails() {
             const compressedWIF = privateKeyToWIF(scalar, true, crypto.wifPrefix);
 
             resultItem.innerHTML = `
-            <h3>${crypto.name} (${crypto.symbol})</h3>
-            <span><strong>Uncompressed Address:</strong> <a href="https://blockchair.com/${crypto.symbol.toLowerCase()}/address/${uncompressedCryptoAddress}" target="_blank">${uncompressedCryptoAddress}</a></span>
-            <span><strong>Compressed Address:</strong> <a href="https://blockchair.com/${crypto.symbol.toLowerCase()}/address/${compressedCryptoAddress}" target="_blank">${compressedCryptoAddress}</a></span>
-            <span><strong>Uncompressed WIF:</strong> ${uncompressedWIF}</span>
-            <span><strong>Compressed WIF:</strong> ${compressedWIF}</span>
-        `;
+                <h3>${crypto.name} (${crypto.symbol})</h3>
+                <span><strong>Uncompressed Address:</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${uncompressedCryptoAddress}" target="_blank">${uncompressedCryptoAddress}</a></span>
+                <span><strong>Compressed Address:</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${compressedCryptoAddress}" target="_blank">${compressedCryptoAddress}</a></span>
+                <span><strong>Uncompressed WIF:</strong> ${uncompressedWIF}</span>
+                <span><strong>Compressed WIF:</strong> ${compressedWIF}</span>
+            `;
 
             resultContainer.appendChild(resultItem);
         });
