@@ -122,6 +122,7 @@ function from_txid(txid, displayInt) {
 
                 resultContainer.appendChild(resultItem);
             });
+            updateDisplayFormat();
         })
         .catch(error => {
             resultContainer.innerHTML = `<div class="result-item"><p>Произошла ошибка: ${error}</p></div>`;
@@ -153,6 +154,7 @@ function from_raw_tx(rawData, displayInt) {
 
             resultContainer.appendChild(resultItem);
         });
+        updateDisplayFormat();
     } catch (error) {
         resultContainer.innerHTML = `<div class="result-item"><p>Произошла ошибка: ${error}</p></div>`;
     }
@@ -170,5 +172,4 @@ function processTransactionData() {
     } else {
         from_raw_tx(inputValue, displayInt);
     }
-    updateDisplayFormat();
 }
