@@ -93,7 +93,7 @@ function updateDisplayFormat() {
 
 document.getElementById("intCheckbox").addEventListener("change", updateDisplayFormat);
 
-function from_txid(txid, displayInt) {
+function from_txid(txid) {
     const resultContainer = document.getElementById("resultContainer");
 
     const url = `https://blockchain.info/rawtx/${txid}?format=hex`;
@@ -129,7 +129,7 @@ function from_txid(txid, displayInt) {
         });
 }
 
-function from_raw_tx(rawData, displayInt) {
+function from_raw_tx(rawData) {
     const resultContainer = document.getElementById("resultContainer");
 
     try {
@@ -162,14 +162,13 @@ function from_raw_tx(rawData, displayInt) {
 
 function processTransactionData() {
     const inputValue = document.getElementById("inputValue").value;
-    const displayInt = document.getElementById("intCheckbox").checked;
 
     // Регулярное выражение для проверки формата TXID (64-значный шестнадцатеричный номер)
     const txidPattern = /^[a-fA-F0-9]{64}$/;
 
     if (txidPattern.test(inputValue)) {
-        from_txid(inputValue, displayInt);
+        from_txid(inputValue);
     } else {
-        from_raw_tx(inputValue, displayInt);
+        from_raw_tx(inputValue);
     }
 }

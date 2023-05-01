@@ -54,44 +54,26 @@ function decimalToScalar(decimalPrivateKey) {
     return BigInt(decimalPrivateKey);
 }
 
-function convertPrivateKeyToScalar() {
-    const privateKey = document.getElementById("inputValue").value;
-    let scalar;
+function convertPrivateKeyToScalar(privateKey) {
     if (isDecimal(privateKey)) {
         console.log("IS DEC")
-        scalar = decimalToScalar(privateKey);
+        return decimalToScalar(privateKey);
     } else if (isHex(privateKey)) {
         console.log("IS HEX")
-        scalar = hexToScalar(privateKey);
+        return hexToScalar(privateKey);
     } else if (isWIF(privateKey)) {
         console.log("IS WIF")
-        scalar = wifToScalar(privateKey);
+        return wifToScalar(privateKey);
     } else if (isCompressedWIF(privateKey)) {
         console.log("IS COMPRESSED WIF")
-        scalar = compressedWifToScalar(privateKey);
+        return compressedWifToScalar(privateKey);
     } else if (isMini(privateKey)) {
         console.log("IS MINI")
-        scalar = miniToScalar(privateKey);
+        return miniToScalar(privateKey);
     } else {
+        alert('Invalid private key format!');
         throw new Error("Invalid private key format");
     }
-    const publicKey = doubleAndAdd(scalar);
-    const uncompressedKey = publicKeyToUncompressed(publicKey[0], publicKey[1]);
-    const compressedKey = publicKeyToCompressed(publicKey[0], publicKey[1]);
-
-    const uncompressedWif = privateKeyToWIF(scalar, false);
-    const compressedWif = privateKeyToWIF(scalar, true);
-
-    const uncompressed_bitcoin_address = publicKeyToAddress(uncompressedKey)
-    const compressed_bitcoin_address = publicKeyToAddress(compressedKey)
-    console.log("Private key (DEC):", scalar.toString());
-    console.log("Private key (HEX):", intToHex(scalar));
-    console.log("Public key (U):", uncompressedKey);
-    console.log("Public key (C):", compressedKey);
-    console.log("Address (U):", uncompressed_bitcoin_address);
-    console.log("Address (C):", compressed_bitcoin_address);
-    console.log("WIF (U):", uncompressedWif);
-    console.log("WIF (C):", compressedWif);
 }
 
 function publicKeyToUncompressed(x, y) {
@@ -106,8 +88,7 @@ function publicKeyToCompressed(x, y) {
     return prefix + xHex;
 }
 
-function publicKeyToAddress(publicKey, version = '00') {
-    const hash = hash160(publicKey);
+function hash160ToAddress(hash, version = '00') {
     const versionHash = version + hash;
     const checksum = sha256(sha256(versionHash)).slice(0, 8);
     const addressHex = versionHash + checksum;
@@ -123,4 +104,25 @@ function privateKeyToWIF(privateKey, compressed = true, version = '80') {
     const checksum = sha256(sha256(privateKeyWithVersion)).slice(0, 8);
     const wif = privateKeyWithVersion + checksum;
     return encodeBase58(wif);
+}
+
+function getWalletDetails() {
+    const privateKey = document.getElementById("inputValue").value;
+    const scalar = convertPrivateKeyToScalar(privateKey);
+    const publicKey = doubleAndAdd(scalar);
+    const uncompressedKey = publicKeyToUncompressed(publicKey[0], publicKey[1]);
+    const compressedKey = publicKeyToCompressed(publicKey[0], publicKey[1]);
+    const uncompressedHash160 = hash160(uncompressedKey);
+    const compressedHash160 = hash160(compressedKey);
+    console.log("Private key (DEC):", scalar.toString());
+    console.log("Private key (HEX):", intToHex(scalar));
+    console.log("Public key (U):", uncompressedKey);
+    console.log("Public key (C):", compressedKey);
+    console.log("Hash160 (U):", uncompressedHash160);
+    console.log("Hash160 (C):", compressedHash160);
+    console.log("Bitcoin address (U):", hash160ToAddress(uncompressedHash160, '00'));
+    console.log("Bitcoin address (C):", hash160ToAddress(compressedHash160, '00'));
+    console.log("Bitcoin WIF (U):", privateKeyToWIF(scalar, false, '80'));
+    console.log("Bitcoin WIF (C):", privateKeyToWIF(scalar, true, '80'));
+
 }
