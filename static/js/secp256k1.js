@@ -3,14 +3,10 @@ const a = 0x0000000000000000000000000000000000000000000000000000000000000000n;
 const b = 0x0000000000000000000000000000000000000000000000000000000000000007n;
 const Gx = 0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798n;
 const Gy = 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8n;
-
+const curve_n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 function isOnSecp256k1(x, y) {
     return (y ** 2n - x ** 3n - a * x - b) % p === 0n;
-}
-
-function intToHex(a) {
-    return a.toString(16).padStart(64, '0').toUpperCase();
 }
 
 function doubleAndAdd(scalar) {

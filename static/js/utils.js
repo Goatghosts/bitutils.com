@@ -109,6 +109,14 @@ function modInv(a, n) {
     }
 }
 
+function intToHex(a) {
+    return a.toString(16).padStart(64, '0').toUpperCase();
+}
+
+function intToBin(a) {
+    return a.toString(2).padStart(256, '0');
+}
+
 function hexToBytes(hex) {
     const byteArray = []
     for (let c = 0; c < hex.length; c += 2)

@@ -131,13 +131,11 @@ function from_txid(txid) {
 
 function from_raw_tx(rawData) {
     const resultContainer = document.getElementById("resultContainer");
+    resultContainer.innerHTML = '';
 
     try {
         const parsed = parseTx(rawData);
         const signableTxn = getSignableTxn(parsed);
-
-        // Очистите контейнер перед добавлением новых данных
-        resultContainer.innerHTML = '';
 
         // Добавьте данные в контейнер
         signableTxn.forEach((item, index) => {
