@@ -1,12 +1,12 @@
 function isWIF(input) {
-    // Формат WIF: 5-символ на старте, затем 50 символов из набора Base58
-    const wifPattern = /^5[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{50}$/;
+    // Формат WIF: 5 или 6 в начале, затем 50 символов из набора Base58
+    const wifPattern = /^[56][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{50}$/;
     return wifPattern.test(input);
 }
 
 function isCompressedWIF(input) {
-    // Формат сжатого WIF: начинается с символа K или L, затем 51 символ из набора Base58
-    const compressedWifPattern = /^[KL][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{51}$/;
+    // Формат сжатого WIF: начинается с символа K, L, Q или T, затем 51 символ из набора Base58
+    const compressedWifPattern = /^[KLQT][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{51}$/;
     return compressedWifPattern.test(input);
 }
 
