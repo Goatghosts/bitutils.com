@@ -11,7 +11,7 @@ function isCompressedWIF(input) {
 }
 
 function isMini(input) {
-    const miniPattern = /^S[1-9A-HJ-NP-Za-km-z]{21}$/;
+    const miniPattern = /^S[1-9A-HJ-NP-Za-km-z]{21,29}$/;
     return miniPattern.test(input);
 }
 
@@ -42,7 +42,7 @@ function compressedWifToScalar(privateKey) {
 }
 
 function miniToScalar(miniPrivateKey) {
-    const sha256hash = sha256(miniPrivateKey);
+    const sha256hash = sha256FromString(miniPrivateKey);
     return BigInt("0x" + sha256hash);
 }
 
@@ -132,6 +132,7 @@ function getWalletDetails() {
     try {
         const privateKey = document.getElementById("inputValue").value;
         const scalar = convertPrivateKeyToScalar(privateKey);
+        console.log(scalar);
         if (scalar >= curve_n) {
             alert('Invalid private key size!');
             throw new Error("Invalid private key size!");
@@ -200,10 +201,10 @@ function getWalletDetails() {
 
             resultItem.innerHTML = `
                 <h3>${crypto.name} (${crypto.symbol})</h3>
-                <span><strong>Uncompressed Address:</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${uncompressedCryptoAddress}" target="_blank">${uncompressedCryptoAddress}</a></span>
-                <span><strong>Compressed Address:</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${compressedCryptoAddress}" target="_blank">${compressedCryptoAddress}</a></span>
-                <span><strong>Uncompressed WIF:</strong> ${uncompressedWIF}</span>
-                <span><strong>Compressed WIF:</strong> ${compressedWIF}</span>
+                <span><strong>Address (U):</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${uncompressedCryptoAddress}" target="_blank">${uncompressedCryptoAddress}</a></span>
+                <span><strong>Address (C):</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${compressedCryptoAddress}" target="_blank">${compressedCryptoAddress}</a></span>
+                <span><strong>WIF (U):</strong> ${uncompressedWIF}</span>
+                <span><strong>WIF (C):</strong> ${compressedWIF}</span>
             `;
 
             resultContainer.appendChild(resultItem);

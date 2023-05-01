@@ -137,6 +137,11 @@ function sha256(hexData) {
     return hash.toString(CryptoJS.enc.Hex);
 }
 
+function sha256FromString(data) {
+    const hash = CryptoJS.SHA256(data);
+    return hash.toString(CryptoJS.enc.Hex);
+}
+
 function hash160(pubk_hex) {
     const sha256hash = sha256(pubk_hex);
     const ripemd160hash = CryptoJS.RIPEMD160(CryptoJS.enc.Hex.parse(sha256hash));
