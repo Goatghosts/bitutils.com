@@ -76,8 +76,51 @@ function convertPrivateKeyToScalar() {
         throw new Error("Invalid private key format");
     }
     const publicKey = doubleAndAdd(scalar);
-    const uncompressedKey = "04" + publicKey[0].toString(16).padStart(64, '0').toUpperCase() + publicKey[1].toString(16).padStart(64, '0').toUpperCase();
+    const uncompressedKey = publicKeyToUncompressed(publicKey[0], publicKey[1]);
+    const compressedKey = publicKeyToCompressed(publicKey[0], publicKey[1]);
+
+    const uncompressedWif = privateKeyToWIF(scalar, false);
+    const compressedWif = privateKeyToWIF(scalar, true);
+
+    const uncompressed_bitcoin_address = publicKeyToAddress(uncompressedKey)
+    const compressed_bitcoin_address = publicKeyToAddress(compressedKey)
     console.log("Private key (DEC):", scalar.toString());
     console.log("Private key (HEX):", intToHex(scalar));
-    console.log("Uncompressed public key:", uncompressedKey);
+    console.log("Public key (U):", uncompressedKey);
+    console.log("Public key (C):", compressedKey);
+    console.log("Address (U):", uncompressed_bitcoin_address);
+    console.log("Address (C):", compressed_bitcoin_address);
+    console.log("WIF (U):", uncompressedWif);
+    console.log("WIF (C):", compressedWif);
+}
+
+function publicKeyToUncompressed(x, y) {
+    const xHex = x.toString(16).padStart(64, '0');
+    const yHex = y.toString(16).padStart(64, '0');
+    return '04' + xHex + yHex;
+}
+
+function publicKeyToCompressed(x, y) {
+    const xHex = x.toString(16).padStart(64, '0');
+    const prefix = y % 2n === 0n ? '02' : '03';
+    return prefix + xHex;
+}
+
+function publicKeyToAddress(publicKey, version = '00') {
+    const hash = hash160(publicKey);
+    const versionHash = version + hash;
+    const checksum = sha256(sha256(versionHash)).slice(0, 8);
+    const addressHex = versionHash + checksum;
+    return encodeBase58(addressHex);
+}
+
+function privateKeyToWIF(privateKey, compressed = true, version = '80') {
+    const privateKeyHex = privateKey.toString(16).padStart(64, '0');
+    let privateKeyWithVersion = version + privateKeyHex;
+    if (compressed) {
+        privateKeyWithVersion += '01';
+    }
+    const checksum = sha256(sha256(privateKeyWithVersion)).slice(0, 8);
+    const wif = privateKeyWithVersion + checksum;
+    return encodeBase58(wif);
 }

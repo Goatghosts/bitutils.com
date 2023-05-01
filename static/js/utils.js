@@ -1,4 +1,3 @@
-
 const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 const ALPHABET_MAP = {};
 for (let i = 0; i < ALPHABET.length; i++) {
@@ -8,38 +7,57 @@ const BASE = 58;
 
 function decodeBase58(string) {
     if (string.length === 0) return '';
-
     let bytes = [0];
     for (let i = 0; i < string.length; i++) {
         const char = string[i];
         if (!(char in ALPHABET_MAP)) {
             throw new Error('Non-base58 character');
         }
-
         for (let j = 0; j < bytes.length; j++) {
             bytes[j] *= BASE;
         }
         bytes[0] += ALPHABET_MAP[char];
-
         let carry = 0;
         for (let j = 0; j < bytes.length; ++j) {
             bytes[j] += carry;
             carry = bytes[j] >> 8;
             bytes[j] &= 0xff;
         }
-
         while (carry) {
             bytes.push(carry & 0xff);
             carry >>= 8;
         }
     }
-
-    // deal with leading zeroes
     for (let i = 0; i < string.length && string[i] === '1'; i++) {
         bytes.push(0);
     }
-
     return bytes.reverse().map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function encodeBase58(hexString) {
+    let bytes = hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
+    let base58 = '';
+    let carry;
+    while (bytes.length > 0) {
+        carry = 0;
+        let result = [];
+        bytes.forEach((byte) => {
+            let value = (carry << 8) + byte;
+            carry = value % BASE;
+            value = (value - carry) / BASE;
+            if (value > 0 || result.length > 0) {
+                result.push(value);
+            }
+        });
+        base58 = ALPHABET[carry] + base58;
+        bytes = result;
+    }
+    let zeroBytes = 0;
+    while (hexString[zeroBytes * 2] === '0' && hexString[zeroBytes * 2 + 1] === '0') {
+        base58 = ALPHABET[0] + base58;
+        zeroBytes++;
+    }
+    return base58;
 }
 
 function mod(a, b) {
@@ -90,6 +108,20 @@ function modInv(a, n) {
         return mod(egcd.x, n)
     }
 }
+
+function hexToBytes(hex) {
+    const byteArray = []
+    for (let c = 0; c < hex.length; c += 2)
+        byteArray.push(parseInt(hex.substr(c, 2), 16));
+    return byteArray;
+}
+
+function intToBytes(integer, byteSize) {
+    const hexString = integer.toString(16).padStart(byteSize * 2, '0');
+    const byteArray = hexToBytes(hexString);
+    return byteArray;
+}
+
 
 function sha256(hexData) {
     const byteArray = CryptoJS.enc.Hex.parse(hexData);
