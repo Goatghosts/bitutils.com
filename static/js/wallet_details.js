@@ -1,46 +1,13 @@
-function isWIF(privateKey) {
-    try {
-        const decoded = decodeBase58(privateKey);
-        const hex = decoded.toString(CryptoJS.enc.Hex);
-        console.log(hex)
-
-        // Проверьте длину и префикс
-        if (hex.length === 74 && (hex.startsWith("80") || hex.startsWith("ef"))) {
-            const checksum = hex.slice(-8);
-            const payload = hex.slice(0, -8);
-            const hash = sha256(sha256(payload)).slice(0, 8);
-
-            // Проверьте сжатый формат
-            if (hex.slice(-10, -8) === "01") {
-                return false;
-            }
-
-            return checksum === hash;
-        }
-    } catch (error) {
-        return false;
-    }
-
-    return false;
+function isWIF(input) {
+    // Формат WIF: 5-символ на старте, затем 50 символов из набора Base58
+    const wifPattern = /^5[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{50}$/;
+    return wifPattern.test(input);
 }
 
 function isCompressedWIF(input) {
-    try {
-        const decoded = decodeBase58(input);
-        const hex = decoded.toString(CryptoJS.enc.Hex);
-        const payload = hex.slice(0, -10);
-
-        if (payload.length === 66 && payload.slice(0, 2) === "80" && hex.slice(-10, -8) === "01") {
-            const checksum = hex.slice(-8);
-            const hash = sha256(sha256(payload + "01")).slice(0, 8);
-
-            return checksum === hash;
-        }
-    } catch (error) {
-        return false;
-    }
-
-    return false;
+    // Формат сжатого WIF: начинается с символа K или L, затем 51 символ из набора Base58
+    const compressedWifPattern = /^[KL][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{51}$/;
+    return compressedWifPattern.test(input);
 }
 
 function isMini(input) {
