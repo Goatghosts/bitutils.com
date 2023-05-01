@@ -154,6 +154,12 @@ button[type="menu"]:hover {
     margin-bottom: 5px;
 }
 
+.result-item div {
+    display: inline;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
 @media (max-width: 480px) {
     .result-item {
         width: 100%;

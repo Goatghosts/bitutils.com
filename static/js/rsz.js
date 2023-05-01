@@ -74,7 +74,26 @@ function getSignableTxn(parsed) {
     return res;
 }
 
-function from_txid(txid) {
+function updateDisplayFormat() {
+    const displayInt = document.getElementById("intCheckbox").checked;
+    const resultItems = document.getElementsByClassName("result-item");
+
+    for (let i = 0; i < resultItems.length; i++) {
+        const item = resultItems[i];
+
+        const r = item.querySelector(".r-value");
+        const s = item.querySelector(".s-value");
+        const z = item.querySelector(".z-value");
+
+        r.textContent = displayInt ? BigInt("0x" + r.dataset.hexValue) : r.dataset.hexValue;
+        s.textContent = displayInt ? BigInt("0x" + s.dataset.hexValue) : s.dataset.hexValue;
+        z.textContent = displayInt ? BigInt("0x" + z.dataset.hexValue) : z.dataset.hexValue;
+    }
+}
+
+document.getElementById("intCheckbox").addEventListener("change", updateDisplayFormat);
+
+function from_txid(txid, displayInt) {
     const resultContainer = document.getElementById("resultContainer");
 
     const url = `https://blockchain.info/rawtx/${txid}?format=hex`;
@@ -95,9 +114,9 @@ function from_txid(txid) {
 
                 resultItem.innerHTML = `
                     <h3>Input #${index}</h3>
-                    <span><strong>R:</strong> ${item.r}</span>
-                    <span><strong>S:</strong> ${item.s}</span>
-                    <span><strong>Z:</strong> ${item.z}</span>
+                    <span><strong>R:</strong> <div class="r-value" data-hex-value="${item.r}">${item.r}</div></span>
+                    <span><strong>S:</strong> <div class="s-value" data-hex-value="${item.s}">${item.s}</div></span>
+                    <span><strong>Z:</strong> <div class="z-value" data-hex-value="${item.z}">${item.z}</div></span>
                     <span><strong>Public Key:</strong> ${item.pub}</span>
                 `;
 
@@ -109,7 +128,7 @@ function from_txid(txid) {
         });
 }
 
-function from_raw_tx(rawData) {
+function from_raw_tx(rawData, displayInt) {
     const resultContainer = document.getElementById("resultContainer");
 
     try {
@@ -126,9 +145,9 @@ function from_raw_tx(rawData) {
 
             resultItem.innerHTML = `
                 <h3>Input #${index}</h3>
-                <span><strong>R:</strong> ${item.r}</span>
-                <span><strong>S:</strong> ${item.s}</span>
-                <span><strong>Z:</strong> ${item.z}</span>
+                <span><strong>R:</strong> <div class="r-value" data-hex-value="${item.r}">${item.r}</div></span>
+                <span><strong>S:</strong> <div class="s-value" data-hex-value="${item.s}">${item.s}</div></span>
+                <span><strong>Z:</strong> <div class="z-value" data-hex-value="${item.z}">${item.z}</div></span>
                 <span><strong>Public Key:</strong> ${item.pub}</span>
             `;
 
@@ -141,13 +160,15 @@ function from_raw_tx(rawData) {
 
 function processTransactionData() {
     const inputValue = document.getElementById("inputValue").value;
+    const displayInt = document.getElementById("intCheckbox").checked;
 
     // Регулярное выражение для проверки формата TXID (64-значный шестнадцатеричный номер)
     const txidPattern = /^[a-fA-F0-9]{64}$/;
 
     if (txidPattern.test(inputValue)) {
-        from_txid(inputValue);
+        from_txid(inputValue, displayInt);
     } else {
-        from_raw_tx(inputValue);
+        from_raw_tx(inputValue, displayInt);
     }
+    updateDisplayFormat();
 }
