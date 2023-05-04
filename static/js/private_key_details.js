@@ -59,21 +59,22 @@ function decimalToScalar(decimalPrivateKey) {
 }
 
 function convertPrivateKeyToScalar(privateKey) {
+    let privateKeyFormat;
     if (isDecimal(privateKey)) {
-        console.log("IS DEC")
-        return decimalToScalar(privateKey);
+        privateKeyFormat = "Decimal";
+        return { scalar: decimalToScalar(privateKey), format: privateKeyFormat };
     } else if (isHex(privateKey)) {
-        console.log("IS HEX")
-        return hexToScalar(privateKey);
+        privateKeyFormat = "Hexadecimal";
+        return { scalar: hexToScalar(privateKey), format: privateKeyFormat };
     } else if (isWIF(privateKey)) {
-        console.log("IS WIF")
-        return wifToScalar(privateKey);
+        privateKeyFormat = "WIF";
+        return { scalar: wifToScalar(privateKey), format: privateKeyFormat };
     } else if (isCompressedWIF(privateKey)) {
-        console.log("IS COMPRESSED WIF")
-        return compressedWifToScalar(privateKey);
+        privateKeyFormat = "Compressed WIF";
+        return { scalar: compressedWifToScalar(privateKey), format: privateKeyFormat };
     } else if (isMini(privateKey)) {
-        console.log("IS MINI")
-        return miniToScalar(privateKey);
+        privateKeyFormat = "Mini";
+        return { scalar: miniToScalar(privateKey), format: privateKeyFormat };
     } else {
         alert('Invalid private key format!');
         throw new Error("Invalid private key format");
@@ -105,12 +106,16 @@ function getPrivateKeyDetails() {
     resultContainer.innerHTML = '';
     try {
         const privateKey = document.getElementById("inputValue").value;
-        const scalar = convertPrivateKeyToScalar(privateKey);
+        const privateKeyData = convertPrivateKeyToScalar(privateKey);
+        const scalar = privateKeyData.scalar;
+        const privateKeyFormat = privateKeyData.format;
         console.log(scalar);
         if (scalar >= curve_n) {
             alert('Invalid private key size!');
             throw new Error("Invalid private key size!");
         }
+        const binaryRepresentation = intToBin(scalar);
+        const bits = binaryRepresentation.length;
         const publicKey = doubleAndAdd(scalar);
         const uncompressedKey = publicKeyToUncompressed(publicKey[0], publicKey[1]);
         const compressedKey = publicKeyToCompressed(publicKey[0], publicKey[1]);
@@ -148,9 +153,11 @@ function getPrivateKeyDetails() {
         mainResultItem.classList.add("result-item");
         mainResultItem.innerHTML = `
             <h3>Information</h2>
+            <span><strong>Private key format:</strong> ${privateKeyFormat}</span>
             <span><strong>Private key (DEC):</strong> ${scalar.toString()}</span>
             <span><strong>Private key (HEX):</strong> ${intToHex(scalar).toUpperCase()}</span>
-            <span><strong>Private key (BIN):</strong> ${intToBin(scalar)}</span>
+            <span><strong>Private key (BIN):</strong> ${binaryRepresentation.padStart(256, '0')}</span>
+            <span><strong>Private key (Bits):</strong> ${bits}</span>
             <br>
             <span><strong>Point X (DEC):</strong> ${publicKey[0]}</span>
             <span><strong>Point Y (DEC):</strong> ${publicKey[1]}</span>

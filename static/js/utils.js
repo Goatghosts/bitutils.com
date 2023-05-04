@@ -113,8 +113,12 @@ function intToHex(a) {
     return a.toString(16).padStart(64, '0');
 }
 
-function intToBin(a) {
+function intToBin256(a) {
     return a.toString(2).padStart(256, '0');
+}
+
+function intToBin(a) {
+    return a.toString(2);
 }
 
 function hexToBytes(hex) {
