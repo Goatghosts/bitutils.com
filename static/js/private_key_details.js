@@ -101,6 +101,17 @@ function DebugPrivateKeyDetails() {
     console.log("Bitcoin WIF (C):", privateKeyToWIF(scalar, true, '80'));
 }
 
+function generateRandomPrivateKey() {
+    if (!window.crypto || !window.crypto.getRandomValues) {
+        alert('Your browser does not support secure random number generation. Please update your browser or use another one.');
+        throw new Error("window.crypto is not available.");
+    }
+    const bytes = new Uint8Array(32);
+    window.crypto.getRandomValues(bytes);
+    const hexPrivateKey = '0x' + Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    document.getElementById('inputValue').value = hexPrivateKey;
+}
+
 function getPrivateKeyDetails() {
     const resultContainer = document.getElementById("resultContainer");
     resultContainer.innerHTML = '';
