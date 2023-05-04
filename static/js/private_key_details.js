@@ -110,7 +110,7 @@ function getPrivateKeyDetails() {
         const scalar = privateKeyData.scalar;
         const privateKeyFormat = privateKeyData.format;
         console.log(scalar);
-        if (scalar >= curve_n) {
+        if (scalar <= 0n || scalar >= curve_n) {
             alert('Invalid private key size!');
             throw new Error("Invalid private key size!");
         }
