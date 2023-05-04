@@ -16,7 +16,7 @@ function isMini(input) {
 }
 
 function isHex(privateKey) {
-    const hexRegex = /^[0-9a-fA-F]+$/;
+    const hexRegex = /^(0[xX])?[0-9a-fA-F]+$/;
     return hexRegex.test(privateKey);
 }
 
@@ -47,6 +47,10 @@ function miniToScalar(miniPrivateKey) {
 }
 
 function hexToScalar(privateKey) {
+    // Удалить префикс "0x", если он присутствует
+    if (privateKey.toLowerCase().startsWith("0x")) {
+        privateKey = privateKey.slice(2);
+    }
     return BigInt("0x" + privateKey);
 }
 
