@@ -85,9 +85,9 @@ function updateDisplayFormat() {
         const s = item.querySelector(".s-value");
         const z = item.querySelector(".z-value");
 
-        r.textContent = displayInt ? BigInt("0x" + r.dataset.hexValue) : r.dataset.hexValue;
-        s.textContent = displayInt ? BigInt("0x" + s.dataset.hexValue) : s.dataset.hexValue;
-        z.textContent = displayInt ? BigInt("0x" + z.dataset.hexValue) : z.dataset.hexValue;
+        r.textContent = displayInt ? BigInt("0x" + r.dataset.hexValue) : r.dataset.hexValue.toUpperCase();
+        s.textContent = displayInt ? BigInt("0x" + s.dataset.hexValue) : s.dataset.hexValue.toUpperCase();
+        z.textContent = displayInt ? BigInt("0x" + z.dataset.hexValue) : z.dataset.hexValue.toUpperCase();
     }
 }
 
@@ -95,6 +95,7 @@ document.getElementById("intCheckbox").addEventListener("change", updateDisplayF
 
 function from_txid(txid) {
     const resultContainer = document.getElementById("resultContainer");
+    resultContainer.innerHTML = '';
 
     const url = `https://blockchain.info/rawtx/${txid}?format=hex`;
 
@@ -103,9 +104,6 @@ function from_txid(txid) {
         .then(data => {
             const parsed = parseTx(data);
             const signableTxn = getSignableTxn(parsed);
-
-            // Очистите контейнер перед добавлением новых данных
-            resultContainer.innerHTML = '';
 
             // Добавьте данные в контейнер
             signableTxn.forEach((item, index) => {
@@ -117,7 +115,7 @@ function from_txid(txid) {
                     <span><strong>R:</strong> <div class="r-value" data-hex-value="${item.r}">${item.r}</div></span>
                     <span><strong>S:</strong> <div class="s-value" data-hex-value="${item.s}">${item.s}</div></span>
                     <span><strong>Z:</strong> <div class="z-value" data-hex-value="${item.z}">${item.z}</div></span>
-                    <span><strong>Public Key:</strong> ${item.pub}</span>
+                    <span><strong>Public Key:</strong> ${item.pub.toUpperCase()}</span>
                 `;
 
                 resultContainer.appendChild(resultItem);
@@ -147,7 +145,7 @@ function from_raw_tx(rawData) {
                 <span><strong>R:</strong> <div class="r-value" data-hex-value="${item.r}">${item.r}</div></span>
                 <span><strong>S:</strong> <div class="s-value" data-hex-value="${item.s}">${item.s}</div></span>
                 <span><strong>Z:</strong> <div class="z-value" data-hex-value="${item.z}">${item.z}</div></span>
-                <span><strong>Public Key:</strong> ${item.pub}</span>
+                <span><strong>Public Key:</strong> ${item.pub.toUpperCase()}</span>
             `;
 
             resultContainer.appendChild(resultItem);

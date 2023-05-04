@@ -11,7 +11,7 @@
     <script src="static/js/crypto-js.min.js" defer></script>
     <script src="static/js/utils.js" defer></script>
     <script src="static/js/secp256k1.js" defer></script>
-    <script src="static/js/wallet_details.js" defer></script>
+    <script src="static/js/private_key_details.js" defer></script>
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 
@@ -37,7 +37,7 @@
                 </p>
                 <input type="text" id="inputValue"
                     placeholder="Enter the private key in any of the available formats (DEC, HEX, WIF, CWIF, MINI)" />
-                <button onclick="getWalletDetails()">Get Details</button>
+                <button onclick="getPrivateKeyDetails()">Get Details</button>
                 <div id="resultContainer" class="result-container">
                 </div>
             </section>

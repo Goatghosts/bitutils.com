@@ -8,15 +8,21 @@ function createMenu() {
 
     const menuItem1 = document.createElement("button");
     menuItem1.setAttribute("type", "menu");
-    menuItem1.textContent = "Get RSZ";
-    menuItem1.onclick = function () { navigateToPage('txn_signatures.html'); };
+    menuItem1.textContent = "Transaction Details";
+    menuItem1.onclick = function () { navigateToPage('transaction_details.html'); };
     menu.appendChild(menuItem1);
 
     const menuItem2 = document.createElement("button");
     menuItem2.setAttribute("type", "menu");
     menuItem2.textContent = "Private Key Details";
-    menuItem2.onclick = function () { navigateToPage('wallet_details.html'); };
+    menuItem2.onclick = function () { navigateToPage('private_key_details.html'); };
     menu.appendChild(menuItem2);
+
+    // const menuItem3 = document.createElement("button");
+    // menuItem3.setAttribute("type", "menu");
+    // menuItem3.textContent = "Public Key Details";
+    // menuItem3.onclick = function () { navigateToPage('public_key_details.html'); };
+    // menu.appendChild(menuItem3);
 
     const telegramButton = document.createElement("button");
     telegramButton.setAttribute("type", "telegram");

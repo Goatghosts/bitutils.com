@@ -110,7 +110,7 @@ function modInv(a, n) {
 }
 
 function intToHex(a) {
-    return a.toString(16).padStart(64, '0').toUpperCase();
+    return a.toString(16).padStart(64, '0');
 }
 
 function intToBin(a) {
@@ -130,7 +130,6 @@ function intToBytes(integer, byteSize) {
     return byteArray;
 }
 
-
 function sha256(hexData) {
     const byteArray = CryptoJS.enc.Hex.parse(hexData);
     const hash = CryptoJS.SHA256(byteArray);
@@ -146,4 +145,34 @@ function hash160(pubk_hex) {
     const sha256hash = sha256(pubk_hex);
     const ripemd160hash = CryptoJS.RIPEMD160(CryptoJS.enc.Hex.parse(sha256hash));
     return ripemd160hash.toString(CryptoJS.enc.Hex);
+}
+
+function publicKeyToUncompressed(x, y) {
+    const xHex = x.toString(16).padStart(64, '0');
+    const yHex = y.toString(16).padStart(64, '0');
+    return '04' + xHex + yHex;
+}
+
+function publicKeyToCompressed(x, y) {
+    const xHex = x.toString(16).padStart(64, '0');
+    const prefix = y % 2n === 0n ? '02' : '03';
+    return prefix + xHex;
+}
+
+function hash160ToAddress(hash, version = '00') {
+    const versionHash = version + hash;
+    const checksum = sha256(sha256(versionHash)).slice(0, 8);
+    const addressHex = versionHash + checksum;
+    return encodeBase58(addressHex);
+}
+
+function privateKeyToWIF(privateKey, compressed = true, version = '80') {
+    const privateKeyHex = privateKey.toString(16).padStart(64, '0');
+    let privateKeyWithVersion = version + privateKeyHex;
+    if (compressed) {
+        privateKeyWithVersion += '01';
+    }
+    const checksum = sha256(sha256(privateKeyWithVersion)).slice(0, 8);
+    const wif = privateKeyWithVersion + checksum;
+    return encodeBase58(wif);
 }

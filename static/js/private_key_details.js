@@ -76,57 +76,27 @@ function convertPrivateKeyToScalar(privateKey) {
     }
 }
 
-function publicKeyToUncompressed(x, y) {
-    const xHex = x.toString(16).padStart(64, '0');
-    const yHex = y.toString(16).padStart(64, '0');
-    return '04' + xHex + yHex;
+function DebugPrivateKeyDetails() {
+    const privateKey = document.getElementById("inputValue").value;
+    const scalar = convertPrivateKeyToScalar(privateKey);
+    const publicKey = doubleAndAdd(scalar);
+    const uncompressedKey = publicKeyToUncompressed(publicKey[0], publicKey[1]);
+    const compressedKey = publicKeyToCompressed(publicKey[0], publicKey[1]);
+    const uncompressedHash160 = hash160(uncompressedKey);
+    const compressedHash160 = hash160(compressedKey);
+    console.log("Private key (DEC):", scalar.toString());
+    console.log("Private key (HEX):", intToHex(scalar));
+    console.log("Public key (U):", uncompressedKey);
+    console.log("Public key (C):", compressedKey);
+    console.log("Hash160 (U):", uncompressedHash160);
+    console.log("Hash160 (C):", compressedHash160);
+    console.log("Bitcoin address (U):", hash160ToAddress(uncompressedHash160, '00'));
+    console.log("Bitcoin address (C):", hash160ToAddress(compressedHash160, '00'));
+    console.log("Bitcoin WIF (U):", privateKeyToWIF(scalar, false, '80'));
+    console.log("Bitcoin WIF (C):", privateKeyToWIF(scalar, true, '80'));
 }
 
-function publicKeyToCompressed(x, y) {
-    const xHex = x.toString(16).padStart(64, '0');
-    const prefix = y % 2n === 0n ? '02' : '03';
-    return prefix + xHex;
-}
-
-function hash160ToAddress(hash, version = '00') {
-    const versionHash = version + hash;
-    const checksum = sha256(sha256(versionHash)).slice(0, 8);
-    const addressHex = versionHash + checksum;
-    return encodeBase58(addressHex);
-}
-
-function privateKeyToWIF(privateKey, compressed = true, version = '80') {
-    const privateKeyHex = privateKey.toString(16).padStart(64, '0');
-    let privateKeyWithVersion = version + privateKeyHex;
-    if (compressed) {
-        privateKeyWithVersion += '01';
-    }
-    const checksum = sha256(sha256(privateKeyWithVersion)).slice(0, 8);
-    const wif = privateKeyWithVersion + checksum;
-    return encodeBase58(wif);
-}
-
-// function getWalletDetails() {
-//     const privateKey = document.getElementById("inputValue").value;
-//     const scalar = convertPrivateKeyToScalar(privateKey);
-//     const publicKey = doubleAndAdd(scalar);
-//     const uncompressedKey = publicKeyToUncompressed(publicKey[0], publicKey[1]);
-//     const compressedKey = publicKeyToCompressed(publicKey[0], publicKey[1]);
-//     const uncompressedHash160 = hash160(uncompressedKey);
-//     const compressedHash160 = hash160(compressedKey);
-//     console.log("Private key (DEC):", scalar.toString());
-//     console.log("Private key (HEX):", intToHex(scalar));
-//     console.log("Public key (U):", uncompressedKey);
-//     console.log("Public key (C):", compressedKey);
-//     console.log("Hash160 (U):", uncompressedHash160);
-//     console.log("Hash160 (C):", compressedHash160);
-//     console.log("Bitcoin address (U):", hash160ToAddress(uncompressedHash160, '00'));
-//     console.log("Bitcoin address (C):", hash160ToAddress(compressedHash160, '00'));
-//     console.log("Bitcoin WIF (U):", privateKeyToWIF(scalar, false, '80'));
-//     console.log("Bitcoin WIF (C):", privateKeyToWIF(scalar, true, '80'));
-// }
-
-function getWalletDetails() {
+function getPrivateKeyDetails() {
     const resultContainer = document.getElementById("resultContainer");
     resultContainer.innerHTML = '';
     try {
@@ -175,18 +145,18 @@ function getWalletDetails() {
         mainResultItem.innerHTML = `
             <h3>Information</h2>
             <span><strong>Private key (DEC):</strong> ${scalar.toString()}</span>
-            <span><strong>Private key (HEX):</strong> ${intToHex(scalar)}</span>
+            <span><strong>Private key (HEX):</strong> ${intToHex(scalar).toUpperCase()}</span>
             <span><strong>Private key (BIN):</strong> ${intToBin(scalar)}</span>
             <br>
             <span><strong>Point X (DEC):</strong> ${publicKey[0]}</span>
             <span><strong>Point Y (DEC):</strong> ${publicKey[1]}</span>
-            <span><strong>Point X (HEX):</strong> ${intToHex(publicKey[0])}</span>
-            <span><strong>Point Y (HEX):</strong> ${intToHex(publicKey[1])}</span>
+            <span><strong>Point X (HEX):</strong> ${intToHex(publicKey[0]).toUpperCase()}</span>
+            <span><strong>Point Y (HEX):</strong> ${intToHex(publicKey[1]).toUpperCase()}</span>
             <br>
-            <span><strong>Public key (U):</strong> ${uncompressedKey}</span>
-            <span><strong>Public key (C):</strong> ${compressedKey}</span>
-            <span><strong>Hash160 (U):</strong> ${uncompressedHash160}</span>
-            <span><strong>Hash160 (C):</strong> ${compressedHash160}</span>
+            <span><strong>Public key (U):</strong> ${uncompressedKey.toUpperCase()}</span>
+            <span><strong>Public key (C):</strong> ${compressedKey.toUpperCase()}</span>
+            <span><strong>Hash160 (U):</strong> ${uncompressedHash160.toUpperCase()}</span>
+            <span><strong>Hash160 (C):</strong> ${compressedHash160.toUpperCase()}</span>
         `;
         resultContainer.appendChild(mainResultItem);
 

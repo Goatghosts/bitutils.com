@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitUtils.com - Utilities for ECDSA and cryptocurrencies</title>
+    <script src="static/js/header.js" defer></script>
+    <script src="static/js/footer.js" defer></script>
+    <script src="static/js/menu.js" defer></script>
+    <script src="static/js/crypto-js.min.js" defer></script>
+    <script src="static/js/utils.js" defer></script>
+    <script src="static/js/secp256k1.js" defer></script>
+    <script src="static/js/private_key_details.js" defer></script>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <main>
+        <div class="menu"></div>
+        <div class="content">
+            <section class="form">
+                <h2>Convert Private Key To Address</h2>
+                <p>
+                    On this page, you'll find tools for working with cryptocurrency private keys.<br>
+                    Enter a private key, and the system will automatically convert it to the corresponding
+                    public key and generate addresses and WIFs for various cryptocurrencies such as Bitcoin, Litecoin,
+                    Dogecoin and Dash.<br>
+                    The results are provided in various formats, including decimal and hexadecimal values, for your
+                    convenience and analysis.
+                <h2>Example:</h2>
+                <strong>dec:</strong> 34592368842595783461480169529335747692719505392594229791591388717055904041387<br>
+                <strong>hex:</strong> 4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB<br>
+                <strong>mini:</strong> S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy<br>
+                <strong>wif (u) (BTC):</strong> 5JPy8Zg7z4P7RSLsiqcqyeAF1935zjNUdMxcDeVrtU1oarrgnB7<br>
+                <strong>wif (c) (LTC):</strong> T5ceC8WrEDuC7hVbRJY5PMZAkU7X7u2gkhQhJd8vm8Qi82NJH2VH<br>
+                </p>
+                <input type="text" id="inputValue"
+                    placeholder="Enter the private key in any of the available formats (DEC, HEX, WIF, CWIF, MINI)" />
+                <button onclick="getPrivateKeyDetails()">Get Details</button>
+                <div id="resultContainer" class="result-container">
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
