@@ -24,10 +24,7 @@
                 <p>
                     On this page, you'll find tools for working with cryptocurrency private keys.<br>
                     Enter a private key, and the system will automatically convert it to the corresponding
-                    public key and generate addresses and WIFs for various cryptocurrencies such as Bitcoin, Litecoin,
-                    Dogecoin and Dash.<br>
-                    The results are provided in various formats, including decimal and hexadecimal values, for your
-                    convenience and analysis.
+                    public key and generate addresses and WIFs for various cryptocurrencies.
                 </p>
                 <p>
                     <strong>Privacy and Security:</strong> Please be aware that all private key processing is done
@@ -54,13 +51,13 @@
                     "0x" prefix to avoid confusion with decimal keys.<br> For example, "0x100" and "100" are two
                     completely different private keys.
                 </p>
-                <p>
-                    <strong>Disclaimer:</strong> While this tool allows you to generate random private keys, we do not
-                    recommend using them for storing cryptocurrencies. There are other sources and tools designed
-                    specifically for generating higher-entropy keys, which provide a higher level of security. Please
-                    consider using dedicated and reputable tools for creating and managing your cryptocurrency wallets.
-                </p>
                 <button class="small-button" onclick="generateRandomPrivateKey()">Generate Random Key</button>
+                <p>
+                    <strong>Disclaimer:</strong> Although this tool can generate cryptographically secure random private
+                    keys, we advise against using them for storing cryptocurrencies. Instead, use dedicated and
+                    reputable tools specifically designed for creating and managing your cryptocurrency wallets, as they
+                    offer higher-entropy keys and better security.
+                </p>
                 <input type="text" id="inputValue"
                     placeholder="Enter the private key in any of the available formats (DEC, HEX, WIF, CWIF, MINI)" />
                 <button onclick="getPrivateKeyDetails()">Get Details</button>
