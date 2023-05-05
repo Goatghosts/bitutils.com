@@ -134,6 +134,14 @@ function intToBytes(integer, byteSize) {
     return byteArray;
 }
 
+function bytesToHex(bytes) {
+    for (var hex = [], i = 0; i < bytes.length; i++) {
+        hex.push((bytes[i] >>> 4).toString(16));
+        hex.push((bytes[i] & 0xF).toString(16));
+    }
+    return hex.join("");
+}
+
 function sha256(hexData) {
     const byteArray = CryptoJS.enc.Hex.parse(hexData);
     const hash = CryptoJS.SHA256(byteArray);
@@ -152,13 +160,13 @@ function hash160(pubk_hex) {
 }
 
 function publicKeyToUncompressed(x, y) {
-    const xHex = x.toString(16).padStart(64, '0');
-    const yHex = y.toString(16).padStart(64, '0');
+    const xHex = intToHex(x);
+    const yHex = intToHex(y);
     return '04' + xHex + yHex;
 }
 
 function publicKeyToCompressed(x, y) {
-    const xHex = x.toString(16).padStart(64, '0');
+    const xHex = intToHex(x);
     const prefix = y % 2n === 0n ? '02' : '03';
     return prefix + xHex;
 }
@@ -170,8 +178,15 @@ function hash160ToAddress(hash, version = '00') {
     return encodeBase58(addressHex);
 }
 
+function publicKeyToEthereumAddress(x, y) {
+    const publicKeyBytes = hexToBytes(intToHex(x) + intToHex(y));
+    const addressBytes = keccak256.array(publicKeyBytes).slice(-20);
+    const address = bytesToHex(addressBytes);
+    return "0x" + address
+}
+
 function privateKeyToWIF(privateKey, compressed = true, version = '80') {
-    const privateKeyHex = privateKey.toString(16).padStart(64, '0');
+    const privateKeyHex = intToHex(privateKey.toString(16));
     let privateKeyWithVersion = version + privateKeyHex;
     if (compressed) {
         privateKeyWithVersion += '01';
