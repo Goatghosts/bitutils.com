@@ -130,33 +130,71 @@ function getPrivateKeyDetails() {
         const publicKey = doubleAndAdd(scalar);
         const uncompressedKey = publicKeyToUncompressed(publicKey[0], publicKey[1]);
         const compressedKey = publicKeyToCompressed(publicKey[0], publicKey[1]);
+        const ethereumAddress = publicKeyToEthereumAddress(publicKey[0], publicKey[1]);
         const uncompressedHash160 = hash160(uncompressedKey);
         const compressedHash160 = hash160(compressedKey);
 
-        const supportedCryptocurrencies = [
+        const cryptocurrencies = [
             {
                 name: "Bitcoin",
                 symbol: "BTC",
-                addressPrefix: "00",
-                wifPrefix: "80",
+                url: "https://www.blockchain.com/explorer/addresses/btc/",
+                addresses: [
+                    { type: ' (U)', data: hash160ToAddress(uncompressedHash160, "00") },
+                    { type: ' (C)', data: hash160ToAddress(compressedHash160, "00") },
+                ],
+                keys: [
+                    { type: ' (U)', data: privateKeyToWIF(scalar, false, "80") },
+                    { type: ' (C)', data: privateKeyToWIF(scalar, true, "80") },
+                ],
+            },
+            {
+                name: "Ethereum",
+                symbol: "ETH",
+                url: "https://etherscan.io/address/",
+                addresses: [
+                    { type: '', data: ethereumAddress },
+                ],
+                keys: [
+                    { type: '', data: intToHex(scalar).toUpperCase() }
+                ],
+            },
+            {
+                name: "Binance Coin",
+                symbol: "BNB",
+                url: "https://bscscan.com/address/",
+                addresses: [
+                    { type: '', data: ethereumAddress },
+                ],
+                keys: [
+                    { type: '', data: intToHex(scalar).toUpperCase() }
+                ],
             },
             {
                 name: "Litecoin",
                 symbol: "LTC",
-                addressPrefix: "30",
-                wifPrefix: "B0",
+                url: "https://blockchair.com/litecoin/address/",
+                addresses: [
+                    { type: ' (U)', data: hash160ToAddress(uncompressedHash160, "30") },
+                    { type: ' (C)', data: hash160ToAddress(compressedHash160, "30") },
+                ],
+                keys: [
+                    { type: ' (U)', data: privateKeyToWIF(scalar, false, "B0") },
+                    { type: ' (C)', data: privateKeyToWIF(scalar, true, "B0") },
+                ],
             },
             {
                 name: "Dogecoin",
                 symbol: "DOGE",
-                addressPrefix: "1E",
-                wifPrefix: "9E",
-            },
-            {
-                name: "Dash",
-                symbol: "DASH",
-                addressPrefix: "4C",
-                wifPrefix: "CC",
+                url: "https://blockchair.com/dogecoin/address/",
+                addresses: [
+                    { type: ' (U)', data: hash160ToAddress(uncompressedHash160, "1E") },
+                    { type: ' (C)', data: hash160ToAddress(compressedHash160, "1E") },
+                ],
+                keys: [
+                    { type: ' (U)', data: privateKeyToWIF(scalar, false, "9E") },
+                    { type: ' (C)', data: privateKeyToWIF(scalar, true, "9E") },
+                ],
             },
         ];
 
@@ -182,22 +220,20 @@ function getPrivateKeyDetails() {
         `;
         resultContainer.appendChild(mainResultItem);
 
-        supportedCryptocurrencies.forEach((crypto) => {
+        cryptocurrencies.forEach((crypto) => {
             const resultItem = document.createElement("div");
             resultItem.classList.add("result-item");
 
-            const uncompressedCryptoAddress = hash160ToAddress(uncompressedHash160, crypto.addressPrefix);
-            const compressedCryptoAddress = hash160ToAddress(compressedHash160, crypto.addressPrefix);
-            const uncompressedWIF = privateKeyToWIF(scalar, false, crypto.wifPrefix);
-            const compressedWIF = privateKeyToWIF(scalar, true, crypto.wifPrefix);
+            resultItem.innerHTML = `<h3>${crypto.name} (${crypto.symbol})</h3>`;
 
-            resultItem.innerHTML = `
-                <h3>${crypto.name} (${crypto.symbol})</h3>
-                <span><strong>Address (U):</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${uncompressedCryptoAddress}" target="_blank">${uncompressedCryptoAddress}</a></span>
-                <span><strong>Address (C):</strong> <a href="https://blockchair.com/${crypto.name.toLowerCase()}/address/${compressedCryptoAddress}" target="_blank">${compressedCryptoAddress}</a></span>
-                <span><strong>WIF (U):</strong> ${uncompressedWIF}</span>
-                <span><strong>WIF (C):</strong> ${compressedWIF}</span>
-            `;
+            crypto.addresses.forEach((address) => {
+                const link = crypto.url + address.data;
+                resultItem.innerHTML += `<span><strong>Address${address.type}:</strong> <a href="${link}" target="_blank">${address.data}</a></span>`;
+            });
+
+            crypto.keys.forEach((key) => {
+                resultItem.innerHTML += `<span><strong>Private key${key.type}:</strong> ${key.data}</span>`;
+            });
 
             resultContainer.appendChild(resultItem);
         });
