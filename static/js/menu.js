@@ -8,8 +8,8 @@ function createMenu() {
 
     const menuItem1 = document.createElement("button");
     menuItem1.setAttribute("type", "menu");
-    menuItem1.textContent = "Transaction Details";
-    menuItem1.onclick = function () { navigateToPage('transaction_details.html'); };
+    menuItem1.textContent = "Bitcoin Transaction Details";
+    menuItem1.onclick = function () { navigateToPage('bitcoin_transaction_details.html'); };
     menu.appendChild(menuItem1);
 
     const menuItem2 = document.createElement("button");
