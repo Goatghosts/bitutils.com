@@ -39,7 +39,6 @@
                     <li>Litecoin (LTC) - Both uncompressed and compressed address formats</li>
                     <li>Dogecoin (DOGE) - Both uncompressed and compressed address formats</li>
                 </ol>
-                Please note that this list may be updated as more cryptocurrencies are added to the tool.
                 </p>
                 <p>
                     <strong>Privacy and Security:</strong> Please be aware that all private key processing is done
@@ -53,25 +52,16 @@
                     need for an internet connection.
                 </p>
                 <p>
-                    <strong>Example:</strong><br>
-                    <strong>dec:</strong>
-                    34592368842595783461480169529335747692719505392594229791591388717055904041387<br>
-                    <strong>hex:</strong> 0x4C7A9640C72DC2099F23715D0C8A0D8A35F8906E3CAB61DD3F78B67BF887C9AB<br>
-                    <strong>mini:</strong> S6c56bnXQiBjk9mqSYE7ykVQ7NzrRy<br>
-                    <strong>wif (u) (BTC):</strong> 5JPy8Zg7z4P7RSLsiqcqyeAF1935zjNUdMxcDeVrtU1oarrgnB7<br>
-                    <strong>wif (c) (LTC):</strong> T5ceC8WrEDuC7hVbRJY5PMZAkU7X7u2gkhQhJd8vm8Qi82NJH2VH<br>
-                </p>
-                <p>
-                    <strong>Note:</strong> For hexadecimal keys, it is recommended to explicitly start the key with the
-                    "0x" prefix to avoid confusion with decimal keys.<br> For example, "0x100" and "100" are two
-                    completely different private keys.
-                </p>
-                <button class="small-button" onclick="generateRandomPrivateKey()">Generate Random Key</button>
-                <p>
                     <strong>Disclaimer:</strong> Although this tool can generate cryptographically secure random private
                     keys, we advise against using them for storing cryptocurrencies. Instead, use dedicated and
                     reputable tools specifically designed for creating and managing your cryptocurrency wallets, as they
                     offer higher-entropy keys and better security.
+                </p>
+                <button class="small-button" onclick="generateRandomPrivateKey()">Generate Random Key</button>
+                <p>
+                    <strong>Note:</strong> For hexadecimal keys, it is recommended to explicitly start the key with the
+                    "0x" prefix to avoid confusion with decimal keys. For example, "0x100" and "100" are two
+                    completely different private keys.
                 </p>
                 <input type="text" id="inputValue"
                     placeholder="Enter the private key in any of the available formats (DEC, HEX, WIF, CWIF, MINI)" />
