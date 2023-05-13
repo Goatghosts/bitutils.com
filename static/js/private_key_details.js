@@ -15,16 +15,6 @@ function isMini(input) {
     return miniPattern.test(input);
 }
 
-function isHex(privateKey) {
-    const hexRegex = /^(0[xX])?[0-9a-fA-F]+$/;
-    return hexRegex.test(privateKey);
-}
-
-function isDecimal(input) {
-    const decimalPattern = /^\d+$/;
-    return decimalPattern.test(input);
-}
-
 function wifToScalar(privateKey) {
     const decoded = decodeBase58(privateKey);
     const hex = decoded.toString(CryptoJS.enc.Hex);
@@ -44,18 +34,6 @@ function compressedWifToScalar(privateKey) {
 function miniToScalar(miniPrivateKey) {
     const sha256hash = sha256FromString(miniPrivateKey);
     return BigInt("0x" + sha256hash);
-}
-
-function hexToScalar(privateKey) {
-    // Удалить префикс "0x", если он присутствует
-    if (privateKey.toLowerCase().startsWith("0x")) {
-        privateKey = privateKey.slice(2);
-    }
-    return BigInt("0x" + privateKey);
-}
-
-function decimalToScalar(decimalPrivateKey) {
-    return BigInt(decimalPrivateKey);
 }
 
 function convertPrivateKeyToScalar(privateKey) {

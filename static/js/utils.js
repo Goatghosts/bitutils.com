@@ -109,6 +109,42 @@ function modInv(a, n) {
     }
 }
 
+function powMod(base, exponent, modulus) {
+    let result = 1n;
+    base = base % modulus;
+    while (exponent > 0n) {
+        if (exponent % 2n === 1n) {
+            result = (result * base) % modulus;
+        }
+        exponent = exponent >> 1n;
+        base = (base * base) % modulus;
+    }
+    return result;
+}
+
+function hexToScalar(input) {
+    // Удалить префикс "0x", если он присутствует
+    if (input.toLowerCase().startsWith("0x")) {
+        input = input.slice(2);
+    }
+    return BigInt("0x" + input);
+}
+
+function decimalToScalar(input) {
+    return BigInt(input);
+}
+
+
+function isHex(input) {
+    const hexRegex = /^(0[xX])?[0-9a-fA-F]+$/;
+    return hexRegex.test(input);
+}
+
+function isDecimal(input) {
+    const decimalPattern = /^\d+$/;
+    return decimalPattern.test(input);
+}
+
 function intToHex(a) {
     return a.toString(16).padStart(64, '0');
 }
