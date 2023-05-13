@@ -6,7 +6,7 @@ const Gy = 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8n;
 const curve_n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
 function isOnSecp256k1(x, y) {
-    return (y ** 2n - x ** 3n - a * x - b) % p === 0n;
+    return mod((y ** 2n - x ** 3n - a * x - b), p) === 0n;
 }
 
 function doubleAndAdd(scalar) {
@@ -34,3 +34,17 @@ function addPoint(x1, y1, x2, y2) {
     const y3 = mod(s * (x1 - x3) - y1, p);
     return [x3, y3];
 }
+
+
+function calculateY(x, isOdd) {
+    let ySquared = mod(x * x * x + 7n, p);
+    let y = powMod(ySquared, (p + 1n) / 4n, p);
+    if (mod((y * y), p) !== ySquared) {
+        throw new Error("No y value for this x on this curve");
+    }
+    if ((y % 2n) !== BigInt(isOdd)) {
+        return p - y;
+    }
+    return y;
+}
+

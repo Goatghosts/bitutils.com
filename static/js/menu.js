@@ -18,11 +18,11 @@ function createMenu() {
     menuItem2.onclick = function () { navigateToPage('private_key_details.html'); };
     menu.appendChild(menuItem2);
 
-    // const menuItem3 = document.createElement("button");
-    // menuItem3.setAttribute("type", "menu");
-    // menuItem3.textContent = "Public Key Details";
-    // menuItem3.onclick = function () { navigateToPage('public_key_details.html'); };
-    // menu.appendChild(menuItem3);
+    const menuItem3 = document.createElement("button");
+    menuItem3.setAttribute("type", "menu");
+    menuItem3.textContent = "Public Key Details";
+    menuItem3.onclick = function () { navigateToPage('public_key_details.html'); };
+    menu.appendChild(menuItem3);
 
     const telegramButton = document.createElement("button");
     telegramButton.setAttribute("type", "telegram");

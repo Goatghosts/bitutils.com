@@ -12,7 +12,7 @@
     <script src="static/js/sha3.min.js" defer></script>
     <script src="static/js/utils.js" defer></script>
     <script src="static/js/secp256k1.js" defer></script>
-    <script src="static/js/private_key_details.js" defer></script>
+    <script src="static/js/public_key_details.js" defer></script>
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 
@@ -21,51 +21,23 @@
         <div class="menu"></div>
         <div class="content">
             <section class="form">
-                <h2>Convert Private Key To Address</h2>
+                <h2>Convert Public Key To Address</h2>
                 <p>
-                    On this page, you'll find tools for working with cryptocurrency private keys.<br>
-                    Enter a private key, and the system will automatically convert it to the corresponding
-                    public key and generate addresses and private keys for various cryptocurrencies.
-
-
+                    On this page, you'll find tools for working with cryptocurrency public keys.<br>
+                    Enter a public key, and the system will automatically convert it to the corresponding
+                    addresses for various cryptocurrencies.
                 </p>
                 <p>
-                    <strong>Supported Cryptocurrencies:</strong>
-                <ol>
-                    <li>Bitcoin (BTC) - Both uncompressed and compressed address formats</li>
-                    <li>Ethereum (ETH) - Ethereum address format</li>
-                    <li>Binance Coin (BNB) - Binance Smart Chain (BSC) address format (compatible with Ethereum
-                        addresses)</li>
-                    <li>Litecoin (LTC) - Both uncompressed and compressed address formats</li>
-                    <li>Dogecoin (DOGE) - Both uncompressed and compressed address formats</li>
-                </ol>
+                    <strong>Note:</strong> The supported public key formats are: decimal point coordinates (X, Y),
+                    hexadecimal point coordinates (X, Y), compressed public key, and uncompressed public key.<br>
+                    For point coordinates, you can separate X and Y with either a comma, a space, a comma followed by a
+                    space, or a new line.<br>
+                    For hexadecimal point coordinates, it is recommended to explicitly start the input with the
+                    "0x" prefix to avoid confusion with decimal inputs.
                 </p>
-                <p>
-                    <strong>Privacy and Security:</strong> Please be aware that all private key processing is done
-                    locally in your browser and is never sent to or stored on our servers. We value your privacy and
-                    security. If you have concerns about using the online version of the tool, you can visit the
-                    repository at <a href="https://github.com/Goatghosts/bitutils.com" target="_blank">github</a>,
-                    download the source code, and
-                    open the <a href="https://github.com/Goatghosts/bitutils.com/blob/main/private_key_details.html"
-                        target="_blank">private_key_details.html</a> file in your browser while offline. The offline
-                    version will function identically to the online version, providing the same features without the
-                    need for an internet connection.
-                </p>
-                <p>
-                    <strong>Disclaimer:</strong> Although this tool can generate cryptographically secure random private
-                    keys, we advise against using them for storing cryptocurrencies. Instead, use dedicated and
-                    reputable tools specifically designed for creating and managing your cryptocurrency wallets, as they
-                    offer higher-entropy keys and better security.
-                </p>
-                <button class="small-button" onclick="generateRandomPrivateKey()">Generate Random Key</button>
-                <p>
-                    <strong>Note:</strong> For hexadecimal keys, it is recommended to explicitly start the key with the
-                    "0x" prefix to avoid confusion with decimal keys. For example, "0x100" and "100" are two
-                    completely different private keys.
-                </p>
-                <input type="text" id="inputValue"
-                    placeholder="Enter the private key in any of the available formats (DEC, HEX, WIF, CWIF, MINI)" />
-                <button onclick="getPrivateKeyDetails()">Get Details</button>
+                <textarea id="inputValue" rows="2"
+                    placeholder="Enter the public key in any of the available formats (Point coordinates DEC, Point coordinates HEX, Compressed Public Key, Uncompressed Public Key)"></textarea>
+                <button onclick="getPublicKeyDetails()">Get Details</button>
                 <div id="resultContainer" class="result-container">
                 </div>
             </section>
