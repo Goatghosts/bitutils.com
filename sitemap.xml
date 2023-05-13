@@ -9,17 +9,22 @@
 
 <url>
   <loc>https://bitutils.com/</loc>
-  <lastmod>2023-05-05T11:16:19+00:00</lastmod>
+  <lastmod>2023-05-13T23:47:08+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://bitutils.com/bitcoin_transaction_details.html</loc>
-  <lastmod>2023-05-05T11:16:19+00:00</lastmod>
+  <lastmod>2023-05-13T23:47:08+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://bitutils.com/private_key_details.html</loc>
-  <lastmod>2023-05-05T11:16:19+00:00</lastmod>
+  <lastmod>2023-05-13T23:47:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bitutils.com/public_key_details.html</loc>
+  <lastmod>2023-05-13T23:47:08+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
