@@ -11,10 +11,6 @@ The purpose of this repository is to create a simple and intuitive toolkit for w
 * Ease of use and data computation
 * Ability to work in offline mode
 
-## Support and Suggestions
-
-If you have any suggestions for extending the functionality or want to share your ideas, please join our [Telegram group](https://t.me/bitutils) for discussion.
-
 ## License
 
 This project is distributed under the MIT License.

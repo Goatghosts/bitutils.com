@@ -24,11 +24,11 @@ function createMenu() {
     menuItem3.onclick = function () { navigateToPage('public_key_details.html'); };
     menu.appendChild(menuItem3);
 
-    const telegramButton = document.createElement("button");
-    telegramButton.setAttribute("type", "telegram");
-    telegramButton.textContent = "Telegram";
-    telegramButton.onclick = function () { window.open('https://t.me/bitutils', '_blank'); };
-    menu.appendChild(telegramButton);
+    // const telegramButton = document.createElement("button");
+    // telegramButton.setAttribute("type", "telegram");
+    // telegramButton.textContent = "Telegram";
+    // telegramButton.onclick = function () { window.open('https://example.com/', '_blank'); };
+    // menu.appendChild(telegramButton);
 
     const githubButton = document.createElement("button");
     githubButton.setAttribute("type", "github");
